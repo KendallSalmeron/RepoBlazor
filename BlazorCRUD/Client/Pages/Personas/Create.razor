@@ -1,0 +1,21 @@
+﻿@page "/crear-persona"
+<h3>Crear Persona</h3>
+
+<EditForm Model="@persona" OnInvalidSubmit="@CrearPersona">
+    <div class="form-field">
+        <label>Nombre:</label>
+        <div>
+            <InputText @bind-Value="@persona.Nombre" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Crear Persona</button>
+</EditForm>
+
+@code {
+    Persona persona = new Persona();
+
+    async Task CrearPersona()
+    { 
+    
+    }
+}

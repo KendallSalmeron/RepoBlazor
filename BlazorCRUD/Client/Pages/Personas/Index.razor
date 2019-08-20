@@ -1,0 +1,61 @@
+﻿@page "/indice-personas"
+@inject HttpClient Http
+
+<h3>Personas</h3>
+<div>
+    <a class="btn btn-link" href="crear-persona">Crear</a>
+</div>
+
+@if (personas == null)
+{
+    <text> Cargando... </text>
+}
+else if (personas.Length == 0)
+{
+    <text> No hay personas en la base de datos</text>
+}
+else 
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Nombre</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var persona in personas)
+            { 
+                <tr>
+                    <td>
+                        <a class="btn btn-success">Editar</a>
+                        <button class="btn btn-danger">Borrar</button>
+                    </td>
+                    <td>@persona.ID</td>
+                    <td>@persona.Nombre</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    Persona[] personas { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CargarPersonas();
+
+    }
+
+    async Task CargarPersonas()
+    {
+        personas = await Http.GetJsonAsync<Persona[]>("personas");
+        personas = new Persona[] {
+        new Persona(){ID =1, Nombre = "Kendall"  },
+        new Persona(){ ID = 2, Nombre = "Carlos"}
+        };
+    }
+
+}
