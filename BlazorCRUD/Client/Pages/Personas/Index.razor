@@ -62,9 +62,10 @@ else
 
     async Task BorrarPersona(int idPersona)
     {
+
         var perSeleccionada = personas.First(p => p.ID == idPersona);
         string mensaje = $"Deseas borrar a la persona {perSeleccionada.Nombre}?";
-        if (await JS.InvokeAsync<bool>("confirm", mensaje))
+        if (await JS.Confirm("Confirmar", mensaje, IJSExtensions.TipoMensajeSweetAlert.error))
         {
             await  Http.DeleteAsync($"personas/{idPersona }");
             await CargarPersonas();
