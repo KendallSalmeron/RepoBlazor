@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BlazorCRUD.Shared.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +12,7 @@ namespace BlazorCRUD.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PersonasController : ControllerBase
     {
         private readonly ApplicationDbContext context;
@@ -20,12 +23,14 @@ namespace BlazorCRUD.Server.Controllers
         }
 
         [HttpGet]
+       [AllowAnonymous]
         public async Task<ActionResult<List<Persona>>> Get()
         {
             return await context.Personas.ToListAsync();
         }
 
         [HttpGet("{id}", Name = "obtenerPersona")]
+        [AllowAnonymous]
         public async Task<ActionResult<Persona>> Get(int id)
         {
             return await context.Personas.FirstOrDefaultAsync(x => x.ID == id);

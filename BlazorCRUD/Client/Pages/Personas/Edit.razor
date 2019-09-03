@@ -1,6 +1,8 @@
 ﻿@page "/editar-persona/{IdPersona:int}"
 @inject HttpClient Http
 @inject IUriHelper UriHelper
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization;
 
 <h3>Editar Person</h3>
 

@@ -18,7 +18,7 @@ function CustomConfirm(titulo, mensaje, tipo) {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Confirmar'
         }).then((result) => {
-            if (result.vale) {
+            if (result.value) {
                 resolve(true);
             } else {
                 resolve(false);

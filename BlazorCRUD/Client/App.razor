@@ -1,5 +1,14 @@
-﻿<Router AppAssembly="typeof(Program).Assembly">
-    <NotFoundContent>
-        <p>Sorry, there's nothing at this address.</p>
-    </NotFoundContent>
-</Router>
+﻿@* Parametro de cascada *@
+@* Desde cualquier parte de mi app puedo saber si el usuario esta o no autenticado *@
+<CascadingAuthenticationState>
+    <Router AppAssembly="typeof(Program).Assembly">
+        <NotFoundContent>
+            <p>Sorry, there's nothing at this address.</p>
+        </NotFoundContent>
+        <NotAuthorizedContent>
+            <p>Usted no esta autorizado</p>
+        </NotAuthorizedContent>
+    </Router>
+</CascadingAuthenticationState>
+
+

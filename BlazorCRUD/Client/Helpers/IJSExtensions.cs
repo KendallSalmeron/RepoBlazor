@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,8 +29,24 @@ namespace BlazorCRUD.Client.Helpers
         {
             return await js.InvokeAsync<bool>("CustomConfirm", titulo, mensaje, tipoMensajeSweetAlert.ToString());
         }
+        public static Task SetInLocalStorage(this IJSRuntime js, string key, string content)
+            => js.InvokeAsync<object>(
+                "localStorage.setItem",
+                key, content
+                );
 
-        public enum TipoMensajeSweetAlert
+        public static Task<string> GetFromLocalStorage(this IJSRuntime js, string key)
+            => js.InvokeAsync<string>(
+                "localStorage.getItem",
+                key
+                );
+
+        public static Task RemoveItem(this IJSRuntime js, string key)
+            => js.InvokeAsync<object>(
+                "localStorage.removeItem",
+                key);
+    
+    public enum TipoMensajeSweetAlert
         { 
             question, warning, error, success, info
         }

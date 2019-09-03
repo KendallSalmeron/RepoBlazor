@@ -5,10 +5,13 @@
 @using CsvHelper;
 
 <h3>Personas</h3>
-<div>
-    <a class="btn btn-link" href="crear-persona">Crear</a>
-</div>
-
+<AuthorizeView>
+    <Authorized>
+        <div>
+            <a class="btn btn-link" href="crear-persona">Crear</a>
+        </div>
+    </Authorized>
+</AuthorizeView>
 @if (personas == null)
 {
     <text> Cargando... </text>
@@ -32,8 +35,12 @@ else
             { 
                 <tr>
                     <td>
-                        <a class="btn btn-success" href="editar-persona/@persona.ID">Editar</a>
-                        <button class="btn btn-danger" @onclick="@(() => BorrarPersona(persona.ID))">Borrar</button>
+                        <AuthorizeView>
+                            <Authorized>
+                                <a class="btn btn-success" href="editar-persona/@persona.ID">Editar</a>
+                                <button class="btn btn-danger" @onclick="@(() => BorrarPersona(persona.ID))">Borrar</button>
+                            </Authorized>
+                        </AuthorizeView>
                     </td>
                     <td>@persona.ID</td>
                     <td>@persona.Nombre</td>

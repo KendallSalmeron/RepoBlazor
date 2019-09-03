@@ -1,0 +1,33 @@
+﻿@page "/login"
+@inject HttpClient http
+@inject IUriHelper uriHelper
+@inject ILoginService  loginService
+@using BlazorCRUD.Client.Auth
+<h3>Login</h3>
+<EditForm Model="@userInfo" OnValidSubmit="LoginUsuario">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <div class="form-field">
+        <label>Email:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@userInfo.Email"></InputText>
+            <ValidationMessage For="@(() => userInfo.Email)"></ValidationMessage>
+        </div>
+    </div>
+    <div class="form-field">
+        <label>Password:</label>
+        <InputPassword class="form-control" @bind-Value="@userInfo.Password"></InputPassword>
+        <ValidationMessage For="@(()=> userInfo.Password)"></ValidationMessage>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</EditForm>
+@code {
+    private UserInfo userInfo = new UserInfo();
+
+    private async Task LoginUsuario()
+    {
+        var result = await http.PostJsonAsync<UserToken>("api/cuentas/login", userInfo);
+        await loginService.Login(result.Token);
+        uriHelper.NavigateTo("");
+
+    }
+}
